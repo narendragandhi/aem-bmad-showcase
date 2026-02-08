@@ -59,6 +59,15 @@ For local development, developers should use the AEM as a Cloud Service SDK. Thi
 
 While the local SDK provides a good emulation of the cloud environment, there are some differences. Developers should be aware of these differences and should regularly deploy their code to a cloud development environment to ensure that it works as expected.
 
+## AI Agent Development with BEAD
+
+When AI agents are involved in development tasks as part of the BMAD framework, they will utilize the BEAD system for enhanced task management, context persistence, and dependency tracking.
+
+-   **Task Breakdown**: AI agents will break down larger BMAD tasks (e.g., "Develop Hero Component") into granular, manageable issues within BEAD.
+-   **Persistent Context**: BEAD will serve as the agent's persistent memory, storing relevant design decisions, code snippets, requirements, and execution logs. This prevents context loss over long-running tasks.
+-   **Dependency Management**: AI agents will track dependencies between their BEAD issues, ensuring tasks are executed in the correct order and preventing conflicts.
+-   **Git-backed Traceability**: All agent actions and task states managed by BEAD are version-controlled in Git, providing full traceability and an audit trail for human oversight and debugging.
+
 ## Unit Testing
 
 - All new Java code must have corresponding JUnit tests.
