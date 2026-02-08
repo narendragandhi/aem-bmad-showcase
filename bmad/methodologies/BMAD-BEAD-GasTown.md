@@ -63,7 +63,54 @@ Gas Town is an AI agent orchestration system that builds upon the BEAD concept. 
 
 ## 5. Multi-Layered Synergy in an AEM Project
 
-The true power emerges when BMAD, BEAD, and Gas Town are layered together within an AEM project, creating a sophisticated AI-augmented development ecosystem:
+The true power emerges when BMAD, BEAD, and Gas Town are layered together within an AEM project, creating a sophisticated AI-augmented development ecosystem.
+
+```mermaid
+graph TD
+    subgraph BMAD Layer (Strategic Oversight & Human-AI Collaboration)
+        BMAD_PM[PM Agent: Define High-level Task (e.g., "Develop Hero Component")] --> BMAD_ARCH[Architect Agent: Design & Validate Component Specs]
+        BMAD_ARCH --> BMAD_DEV_TASK(BMAD Task: "Develop Hero Component" with specs from component-design.md)
+    end
+
+    subgraph Gastown Layer (Multi-Agent Orchestration)
+        GT_MAYOR[Mayor AI: Orchestrate Team for "Develop Hero Component"]
+        BMAD_DEV_TASK --> GT_MAYOR
+
+        GT_MAYOR -- Directs & Monitors --> AICoder(AI Coder Agent)
+        GT_MAYOR -- Directs & Monitors --> AITest(AI Test Writer Agent)
+        GT_MAYOR -- Directs & Monitors --> AICReview(AI Code Reviewer Agent)
+    end
+
+    subgraph BEAD Layer (Individual AI Agent Task Management & Persistent Context)
+        AICoder -- Manages Tasks & Context via --> BEADCoder[BEAD: Coder's Tasks (e.g., Sling Model, HTL, CSS)]
+        AITest -- Manages Tasks & Context via --> BEADTest[BEAD: Tester's Tasks (e.g., JUnit, UI Tests)]
+        AICReview -- Manages Tasks & Context via --> BEADReview[BEAD: Reviewer's Tasks (e.g., Code Quality, Compliance)]
+
+        BEADCoder --> SLING[Task: Create Sling Model (using component-design.md)]
+        BEADCoder --> HTL[Task: Develop HTL Script (using design system, i18n)]
+        BEADCoder --> CSS[Task: Style CSS (using design system tokens)]
+
+        BEADTest --> JUNIT[Task: Write JUnit Test (for Sling Model)]
+        BEADTest --> UI_TEST[Task: Write UI Test (for component rendering)]
+
+        BEADReview --> REVIEW_CODE[Task: Review Coder's Work (for standards, accessibility)]
+    end
+
+    SLING --> HTL
+    HTL --> CSS
+    CSS -- Code Ready --> JUNIT
+    JUNIT -- Tests Pass --> UI_TEST
+    UI_TEST -- Tests Pass --> REVIEW_CODE
+
+    REVIEW_CODE -- Reports Status to --> AICReview
+    AICReview -- Reports Status to --> GT_MAYOR
+    AITest -- Reports Status to --> GT_MAYOR
+    AICoder -- Reports Status to --> GT_MAYOR
+
+    GT_MAYOR -- Aggregates & Reports Completion --> BMAD_DEV_TASK
+    BMAD_DEV_TASK --> AEM_DEPLOY(AEM Cloud Manager Deployment Trigger)
+    AEM_DEPLOY --> FINAL_PRODUCT(Deployed AEM Site)
+```
 
 1.  **BMAD as the Strategic Layer**: BMAD defines the overarching strategy and process for the entire AEM project. It sets high-level goals, establishes phases like Business Discovery and Architecture Design, and assigns roles. This is where the human team collaborates with and directs the higher-level BMAD AI agents (e.g., a "BMAD PM Agent").
 
