@@ -23,6 +23,23 @@ This document outlines the comprehensive testing strategy for the AEM project to
 - **Execution**: Run as part of the frontend build process within the Cloud Manager pipeline.
 - **Goal**: To ensure that the frontend components render correctly and that user interactions work as expected.
 
+## Accessibility Testing
+
+- **Methodology**:
+    - **Automated Scans**: Integrate tools like Axe-core or Lighthouse into CI/CD for automated checks.
+    - **Manual Review**: Conduct expert reviews using assistive technologies (screen readers) and keyboard navigation.
+- **Scope**: All UI components and templates, focusing on WCAG 2.1 AA compliance.
+- **Goal**: To ensure the application is usable by individuals with disabilities.
+
+## Multi-lingual Testing
+
+- **Methodology**:
+    - **Content Verification**: Ensure all content is translated correctly and consistently across all supported languages.
+    - **UI Layout**: Verify that the UI adapts correctly to different text lengths and right-to-left (RTL) languages where applicable.
+    - **Functionality**: Test all features in each language to ensure consistent behavior.
+- **Scope**: All localized pages, components, and functionalities.
+- **Goal**: To ensure the application provides a seamless and correct experience in all supported languages.
+
 ## Performance Testing
 
 - **Tooling**: AEM-specific performance testing tools and potentially JMeter for custom scenarios.

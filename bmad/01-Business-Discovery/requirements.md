@@ -6,7 +6,7 @@ This document outlines the high-level business and functional requirements for t
 
 - Launch a new marketing website to showcase our products.
 - Improve content authoring efficiency and governance.
-- Provide a responsive and accessible user experience across all devices.
+- Provide a responsive, accessible, and multi-lingual user experience across all devices.
 - Integrate with our existing CRM and analytics platforms.
 
 ## Functional Requirements
@@ -25,3 +25,9 @@ This document outlines the high-level business and functional requirements for t
 - **SEO**:
     - Customizable page titles, meta descriptions, and canonical URLs.
     - Automatic generation of sitemaps.
+- **Accessibility**:
+    - The website must conform to WCAG 2.1 AA standards.
+    - All components must be keyboard-navigable and screen-reader friendly.
+- **Multi-lingual Support**:
+    - The website must support content in multiple languages (e.g., English, French, German).
+    - Content authors must be able to easily translate content and manage language variations.

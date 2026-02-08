@@ -1,12 +1,33 @@
 # Development Guidelines
 
-This document contains the coding standards, branching strategy, and other development guidelines for the project.
+This document contains the coding standards, branching strategy, and other development guidelines for the project. These guidelines are crucial for maintaining code quality, ensuring consistency, and meeting project requirements such as design system adherence, accessibility, and multi-lingual support.
 
 ## Coding Standards
 
 - **Java**: Follow the Google Java Style Guide.
 - **HTL**: Use the official AEM HTL style guide.
-- **CSS**: Use the BEM naming convention.
+- **CSS**: Use the BEM naming convention, leveraging design system tokens for styling.
+
+## Design System Adherence
+
+- All new components and modifications to existing ones must strictly adhere to the project's [Design System Integration](../02-Model-Definition/design-system.md) guidelines.
+- Developers should utilize provided design tokens (colors, fonts, spacing) and component patterns to maintain visual consistency.
+
+## Accessibility Guidelines (WCAG 2.1 AA)
+
+- All UI components and rendered content must be developed with accessibility in mind.
+- **Semantic HTML**: Use appropriate HTML5 semantic elements (e.g., `<header>`, `<nav>`, `<main>`, `<aside>`, `<footer>`, `<article>`, `<section>`).
+- **Keyboard Navigation**: Ensure all interactive elements are keyboard-navigable and have clear focus indicators.
+- **ARIA Attributes**: Use WAI-ARIA attributes where necessary to enhance accessibility for assistive technologies.
+- **Color Contrast**: Verify sufficient color contrast for all text and interactive elements.
+- **Alt Text**: All meaningful images must have descriptive `alt` attributes.
+- **Form Labels**: All form fields must have properly associated labels.
+
+## Internationalization (i18n) Guidelines
+
+- All user-facing text and messages must be externalized using AEM's i18n framework.
+- Avoid hardcoding text directly into HTL templates or Sling Models.
+- Ensure that components support right-to-left (RTL) languages if required by the project.
 
 ## Branching Strategy
 
@@ -17,7 +38,7 @@ This document contains the coding standards, branching strategy, and other devel
 ## Code Reviews
 
 - All code must be reviewed by at least one other developer before being merged into the `develop` branch.
-- The reviewer should check for correctness, adherence to coding standards, and test coverage.
+- The reviewer should check for correctness, adherence to coding standards, accessibility, i18n readiness, and test coverage.
 
 ## Local Development Environment
 
