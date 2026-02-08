@@ -1,0 +1,21 @@
+<sly data-sly-use.model="com.example.aem.bmad.core.models.HeroModel"
+     data-sly-use.placeholderTemplate="core/wcm/components/commons/v1/templates.html"
+     data-sly-test.hasContent="${model.heading || model.subheading || model.backgroundImage}" >
+    <div class="cmp-hero" data-cmp-is="hero">
+        <sly data-sly-test="${model.backgroundImage}">
+            <div class="cmp-hero__image" style="background-image: url(${model.backgroundImage @ context='uri'});"></div>
+        </sly>
+        <div class="cmp-hero__content">
+            <sly data-sly-test="${model.heading}">
+                <h1 class="cmp-hero__heading">${model.heading}</h1>
+            </sly>
+            <sly data-sly-test="${model.subheading}">
+                <p class="cmp-hero__subheading">${model.subheading}</p>
+            </sly>
+            <sly data-sly-test="${model.ctaButtonText && model.ctaButtonLink}">
+                <a href="${model.ctaButtonLink @ extension='html'}" class="cmp-hero__cta-button">${model.ctaButtonText}</a>
+            </sly>
+        </div>
+    </div>
+</sly>
+<sly data-sly-call="${placeholderTemplate.placeholder @ isEmpty=!hasContent, classAppend='cmp-hero'}"></sly>
