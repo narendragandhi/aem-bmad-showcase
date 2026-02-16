@@ -1,21 +1,44 @@
 <sly data-sly-use.model="com.example.aem.bmad.core.models.HeroModel"
      data-sly-use.placeholderTemplate="core/wcm/components/commons/v1/templates.html"
-     data-sly-test.hasContent="${model.heading || model.subheading || model.backgroundImage}" >
-    <div class="cmp-hero" data-cmp-is="hero">
+     data-sly-test.hasContent="${model.heading || model.subheading || model.backgroundImage}">
+    <!--/* Hero Component - WCAG 2.1 AA Compliant
+         Accessibility features:
+         - role="banner" for landmark navigation
+         - aria-labelledby links region to heading
+         - Semantic HTML structure (h1, p)
+         - Keyboard-accessible CTA with focus styles
+         - Background image is decorative (no alt needed)
+    */-->
+    <section class="cmp-hero"
+             data-cmp-is="hero"
+             role="banner"
+             aria-labelledby="${model.heading ? 'hero-heading' : ''}">
         <sly data-sly-test="${model.backgroundImage}">
-            <div class="cmp-hero__image" style="background-image: url(${model.backgroundImage @ context='uri'});"></div>
+            <!--/* Background image is decorative, using CSS background-image
+                  No alt text needed as content is conveyed through heading/subheading */-->
+            <div class="cmp-hero__image"
+                 style="background-image: url(${model.backgroundImage @ context='uri'});"
+                 aria-hidden="true"
+                 role="presentation"></div>
         </sly>
         <div class="cmp-hero__content">
             <sly data-sly-test="${model.heading}">
-                <h1 class="cmp-hero__heading">${model.heading}</h1>
+                <h1 id="hero-heading" class="cmp-hero__heading">${model.heading}</h1>
             </sly>
             <sly data-sly-test="${model.subheading}">
                 <p class="cmp-hero__subheading">${model.subheading}</p>
             </sly>
             <sly data-sly-test="${model.ctaButtonText && model.ctaButtonLink}">
-                <a href="${model.ctaButtonLink @ extension='html'}" class="cmp-hero__cta-button">${model.ctaButtonText}</a>
+                <!--/* CTA button with accessible name from visible text
+                       External links should have additional context */-->
+                <a href="${model.ctaButtonLink @ extension='html'}"
+                   class="cmp-hero__cta-button"
+                   role="button"
+                   data-sly-attribute.target="${model.ctaButtonLink @ context='text' ? (model.ctaButtonLink.startsWith('http') ? '_blank' : '') : ''}"
+                   data-sly-attribute.rel="${model.ctaButtonLink @ context='text' ? (model.ctaButtonLink.startsWith('http') ? 'noopener noreferrer' : '') : ''}"
+                   data-sly-attribute.aria-label="${model.ctaButtonLink @ context='text' ? (model.ctaButtonLink.startsWith('http') ? model.ctaButtonText + ' (opens in new window)' : '') : ''}">${model.ctaButtonText}</a>
             </sly>
         </div>
-    </div>
+    </section>
 </sly>
 <sly data-sly-call="${placeholderTemplate.placeholder @ isEmpty=!hasContent, classAppend='cmp-hero'}"></sly>

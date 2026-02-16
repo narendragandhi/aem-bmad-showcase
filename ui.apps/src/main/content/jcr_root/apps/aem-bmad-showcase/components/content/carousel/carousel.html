@@ -1,0 +1,97 @@
+<sly data-sly-use.model="com.example.aem.bmad.core.models.CarouselModel"
+     data-sly-use.placeholderTemplate="core/wcm/components/commons/v1/templates.html"
+     data-sly-test.hasContent="${model.hasSlides}">
+    <!--/*
+        Carousel Component - WCAG 2.1 AA Compliant
+        Spec: SPEC-CAROUSEL-001
+
+        Accessibility features:
+        - role="region" with aria-roledescription="carousel"
+        - Slides use role="group" with aria-roledescription="slide"
+        - aria-live for screen reader announcements
+        - Keyboard navigation support
+        - Pause on focus/hover for autoplay
+    */-->
+    <section class="cmp-carousel"
+             data-cmp-is="carousel"
+             role="region"
+             aria-roledescription="carousel"
+             aria-label="Image carousel"
+             data-autoplay="${model.autoplay}"
+             data-autoplay-speed="${model.autoplaySpeed}"
+             data-pause-on-hover="${model.pauseOnHover}">
+
+        <!--/* Slides container */-->
+        <div class="cmp-carousel__content"
+             aria-live="${model.autoplay ? 'off' : 'polite'}">
+            <sly data-sly-list.slide="${model.slides}">
+                <div class="cmp-carousel__slide ${slideList.first ? 'cmp-carousel__slide--active' : ''}"
+                     role="group"
+                     aria-roledescription="slide"
+                     aria-label="Slide ${slideList.count} of ${model.slideCount}"
+                     aria-hidden="${!slideList.first}"
+                     data-slide-index="${slideList.index}">
+
+                    <sly data-sly-test="${slide.hasImage}">
+                        <img src="${slide.image @ context='uri'}"
+                             alt="${slide.imageAlt}"
+                             class="cmp-carousel__slide-image"
+                             loading="${slideList.first ? 'eager' : 'lazy'}"/>
+                    </sly>
+
+                    <div class="cmp-carousel__slide-content">
+                        <sly data-sly-test="${slide.heading}">
+                            <h2 class="cmp-carousel__slide-heading">${slide.heading}</h2>
+                        </sly>
+                        <sly data-sly-test="${slide.description}">
+                            <p class="cmp-carousel__slide-description">${slide.description}</p>
+                        </sly>
+                        <sly data-sly-test="${slide.hasCta}">
+                            <a href="${slide.ctaLink @ extension='html'}"
+                               class="cmp-carousel__slide-cta"
+                               data-sly-attribute.target="${slide.externalLink ? '_blank' : ''}"
+                               data-sly-attribute.rel="${slide.externalLink ? 'noopener noreferrer' : ''}"
+                               data-sly-attribute.aria-label="${slide.externalLink ? slide.ctaText + ' (opens in new window)' : ''}">
+                                ${slide.ctaText}
+                            </a>
+                        </sly>
+                    </div>
+                </div>
+            </sly>
+        </div>
+
+        <!--/* Navigation arrows */-->
+        <sly data-sly-test="${model.showArrows && model.slideCount > 1}">
+            <div class="cmp-carousel__actions">
+                <button type="button"
+                        class="cmp-carousel__action cmp-carousel__action--prev"
+                        aria-label="Previous slide"
+                        aria-controls="carousel-slides">
+                    <span class="cmp-carousel__action-icon" aria-hidden="true"></span>
+                </button>
+                <button type="button"
+                        class="cmp-carousel__action cmp-carousel__action--next"
+                        aria-label="Next slide"
+                        aria-controls="carousel-slides">
+                    <span class="cmp-carousel__action-icon" aria-hidden="true"></span>
+                </button>
+            </div>
+        </sly>
+
+        <!--/* Dot indicators */-->
+        <sly data-sly-test="${model.showIndicators && model.slideCount > 1}">
+            <div class="cmp-carousel__indicators" role="tablist" aria-label="Slide indicators">
+                <sly data-sly-list.slide="${model.slides}">
+                    <button type="button"
+                            class="cmp-carousel__indicator ${slideList.first ? 'cmp-carousel__indicator--active' : ''}"
+                            role="tab"
+                            aria-label="Go to slide ${slideList.count}"
+                            aria-selected="${slideList.first}"
+                            data-slide-index="${slideList.index}">
+                    </button>
+                </sly>
+            </div>
+        </sly>
+    </section>
+</sly>
+<sly data-sly-call="${placeholderTemplate.placeholder @ isEmpty=!hasContent, classAppend='cmp-carousel'}"></sly>

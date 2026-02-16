@@ -24,7 +24,7 @@ This document records the parameters used to generate the AEM project using the 
 ## Command Used
 
 ```bash
- הראשונה -B archetype:generate \
+mvn -B archetype:generate \
  -D archetypeGroupId=com.adobe.aem \
  -D archetypeArtifactId=aem-project-archetype \
  -D archetypeVersion=35 \

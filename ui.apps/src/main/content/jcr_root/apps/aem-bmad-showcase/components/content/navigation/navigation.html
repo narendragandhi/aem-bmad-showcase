@@ -1,0 +1,39 @@
+<sly data-sly-use.model="com.example.aem.bmad.core.models.NavigationModel"
+     data-sly-use.navItemTemplate="navigation-item.html"
+     data-sly-test.hasContent="${model.hasItems}">
+    <!--/*
+        Navigation Component - WCAG 2.1 AA Compliant
+        Spec: SPEC-NAV-001
+
+        Accessibility features:
+        - <nav> landmark with aria-label
+        - Semantic <ul>/<li> structure
+        - aria-haspopup and aria-expanded for submenus
+        - aria-current="page" for current page
+        - Full keyboard navigation support
+        - Mobile menu with aria-expanded
+    */-->
+    <nav class="cmp-navigation"
+         data-cmp-is="navigation"
+         aria-label="Main navigation">
+
+        <!--/* Mobile menu toggle */-->
+        <button type="button"
+                class="cmp-navigation__toggle"
+                aria-expanded="false"
+                aria-controls="main-nav-menu"
+                aria-label="Toggle navigation menu">
+            <span class="cmp-navigation__toggle-icon" aria-hidden="true"></span>
+            <span class="cmp-navigation__toggle-text">Menu</span>
+        </button>
+
+        <!--/* Navigation menu */-->
+        <ul id="main-nav-menu"
+            class="cmp-navigation__group cmp-navigation__group--level-0"
+            role="menubar">
+            <sly data-sly-list.item="${model.items}">
+                <sly data-sly-call="${navItemTemplate.navItem @ item=item}"></sly>
+            </sly>
+        </ul>
+    </nav>
+</sly>

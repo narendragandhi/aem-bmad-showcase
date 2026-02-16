@@ -1,0 +1,33 @@
+<sly data-sly-use.model="com.example.aem.bmad.core.models.CardGridModel"
+     data-sly-use.templates="core/wcm/components/commons/v1/templates.html">
+    <!--/*
+        Card Grid Component - WCAG 2.1 AA Compliant
+        Spec: SPEC-CARDGRID-001
+
+        Accessibility features:
+        - Semantic <section> with aria-labelledby
+        - Proper heading hierarchy
+        - CSS Grid layout (not table)
+        - Maintains DOM reading order
+    */-->
+    <section class="cmp-cardgrid ${model.gridClass} ${model.gapClass}"
+             data-cmp-is="cardgrid"
+             data-sly-attribute.aria-labelledby="${model.hasHeading ? 'cardgrid-heading' : ''}">
+
+        <!--/* Section Heading */-->
+        <sly data-sly-test="${model.hasHeading}">
+            <div class="cmp-cardgrid__header">
+                <h2 data-sly-element="${model.headingLevel}"
+                    id="cardgrid-heading"
+                    class="cmp-cardgrid__heading">
+                    ${model.heading}
+                </h2>
+            </div>
+        </sly>
+
+        <!--/* Card Container - parsys for Card components */-->
+        <div class="cmp-cardgrid__items">
+            <sly data-sly-resource="${'cards' @ resourceType='wcm/foundation/components/responsivegrid'}"></sly>
+        </div>
+    </section>
+</sly>

@@ -1,0 +1,38 @@
+<!--/* Navigation Item Template - Recursive */-->
+<template data-sly-template.navItem="${@ item}">
+    <li class="cmp-navigation__item cmp-navigation__item--level-${item.level} ${item.active ? 'cmp-navigation__item--active' : ''} ${item.hasChildren ? 'cmp-navigation__item--has-children' : ''}"
+        role="none">
+
+        <sly data-sly-test="${item.hasChildren}">
+            <!--/* Item with submenu */-->
+            <a href="${item.url}"
+               class="cmp-navigation__link"
+               role="menuitem"
+               aria-haspopup="true"
+               aria-expanded="false"
+               data-sly-attribute.aria-current="${item.current ? 'page' : ''}">
+                <span class="cmp-navigation__link-text">${item.title}</span>
+                <span class="cmp-navigation__link-icon" aria-hidden="true"></span>
+            </a>
+
+            <!--/* Submenu */-->
+            <ul class="cmp-navigation__group cmp-navigation__group--level-${item.level + 1}"
+                role="menu"
+                aria-label="${item.title} submenu">
+                <sly data-sly-list.childItem="${item.children}">
+                    <sly data-sly-call="${navItem @ item=childItem}"></sly>
+                </sly>
+            </ul>
+        </sly>
+
+        <sly data-sly-test="${!item.hasChildren}">
+            <!--/* Item without submenu */-->
+            <a href="${item.url}"
+               class="cmp-navigation__link"
+               role="menuitem"
+               data-sly-attribute.aria-current="${item.current ? 'page' : ''}">
+                <span class="cmp-navigation__link-text">${item.title}</span>
+            </a>
+        </sly>
+    </li>
+</template>

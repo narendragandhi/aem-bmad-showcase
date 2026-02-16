@@ -1,0 +1,57 @@
+<sly data-sly-use.model="com.example.aem.bmad.core.models.CardModel"
+     data-sly-use.placeholderTemplate="core/wcm/components/commons/v1/templates.html"
+     data-sly-test.hasContent="${model.heading}">
+    <!--/*
+        Card Component - WCAG 2.1 AA Compliant
+        Spec: SPEC-CARD-001
+
+        Accessibility features:
+        - Semantic <article> element
+        - Proper heading hierarchy
+        - Image alt text required
+        - Full-card clickable area via CSS
+        - Focus visible states
+    */-->
+    <article class="cmp-card ${model.variantClass}"
+             data-cmp-is="card">
+
+        <!--/* Card Image */-->
+        <sly data-sly-test="${model.hasImage}">
+            <div class="cmp-card__image-wrapper">
+                <img src="${model.image @ context='uri'}"
+                     alt="${model.imageAlt}"
+                     class="cmp-card__image"
+                     loading="lazy"/>
+            </div>
+        </sly>
+
+        <!--/* Card Content */-->
+        <div class="cmp-card__content">
+            <!--/* Eyebrow text */-->
+            <sly data-sly-test="${model.hasEyebrow}">
+                <span class="cmp-card__eyebrow">${model.eyebrow}</span>
+            </sly>
+
+            <!--/* Heading - defaults to h3, can be adjusted via CSS for context */-->
+            <h3 class="cmp-card__heading">${model.heading}</h3>
+
+            <!--/* Description */-->
+            <sly data-sly-test="${model.hasDescription}">
+                <p class="cmp-card__description">${model.description}</p>
+            </sly>
+
+            <!--/* CTA Link - stretches to cover full card */-->
+            <sly data-sly-test="${model.hasCta}">
+                <a href="${model.ctaLink @ extension='html'}"
+                   class="cmp-card__cta"
+                   data-sly-attribute.target="${model.externalLink ? '_blank' : ''}"
+                   data-sly-attribute.rel="${model.externalLink ? 'noopener noreferrer' : ''}"
+                   data-sly-attribute.aria-label="${model.externalLink ? model.ctaText + ' - ' + model.heading + ' (opens in new window)' : model.ctaText + ' - ' + model.heading}">
+                    <span class="cmp-card__cta-text">${model.ctaText}</span>
+                    <span class="cmp-card__cta-icon" aria-hidden="true"></span>
+                </a>
+            </sly>
+        </div>
+    </article>
+</sly>
+<sly data-sly-call="${placeholderTemplate.placeholder @ isEmpty=!hasContent, classAppend='cmp-card'}"></sly>
