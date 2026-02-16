@@ -1,0 +1,63 @@
+# Dispatcher Filter Rules for AEM BMAD Showcase
+# Deny everything first, then allow specific paths
+# See: https://experienceleague.adobe.com/docs/experience-manager-cloud-service/content/implementing/content-delivery/disp-overview.html
+
+# Deny all by default
+/0001 { /type "deny" /url "*" }
+
+# Allow content paths
+/0010 { /type "allow" /url "/content/*" }
+
+# Allow client libraries
+/0020 { /type "allow" /url "/etc.clientlibs/*" }
+/0021 { /type "allow" /url "/etc/designs/*" }
+
+# Allow DAM assets
+/0030 { /type "allow" /url "/content/dam/*" }
+
+# Allow static files
+/0040 { /type "allow" /url "*.css" }
+/0041 { /type "allow" /url "*.js" }
+/0042 { /type "allow" /url "*.gif" }
+/0043 { /type "allow" /url "*.ico" }
+/0044 { /type "allow" /url "*.jpg" }
+/0045 { /type "allow" /url "*.jpeg" }
+/0046 { /type "allow" /url "*.png" }
+/0047 { /type "allow" /url "*.svg" }
+/0048 { /type "allow" /url "*.woff" }
+/0049 { /type "allow" /url "*.woff2" }
+/0050 { /type "allow" /url "*.webp" }
+
+# Allow JSON model exporter (for headless)
+/0060 { /type "allow" /url "*.model.json" }
+/0061 { /type "allow" /extension "json" /path "/content/*" }
+
+# Allow GraphQL endpoint
+/0070 { /type "allow" /url "/graphql/*" }
+/0071 { /type "allow" /url "/content/cq:graphql/*" }
+/0072 { /type "allow" /url "/content/_cq_graphql/*" }
+
+# Allow sitemaps
+/0080 { /type "allow" /url "*.sitemap.xml" }
+/0081 { /type "allow" /url "/sitemap.xml" }
+
+# Allow robots.txt
+/0090 { /type "allow" /url "/robots.txt" }
+
+# Deny selectors that could expose sensitive info
+/0100 { /type "deny" /selectors "(infinity|tidy|grayscale|hierarchylisting)" }
+
+# Deny query strings that could be exploited
+/0110 { /type "deny" /query "debug=*" }
+/0111 { /type "deny" /query "wcmmode=*" }
+
+# Deny admin paths
+/0120 { /type "deny" /url "/admin/*" }
+/0121 { /type "deny" /url "/system/*" }
+/0122 { /type "deny" /url "/apps/*" }
+/0123 { /type "deny" /url "/libs/*" }
+/0124 { /type "deny" /url "/crx/*" }
+/0125 { /type "deny" /url "/bin/*" }
+
+# Allow specific bin servlets if needed
+# /0130 { /type "allow" /url "/bin/bmad/*" }

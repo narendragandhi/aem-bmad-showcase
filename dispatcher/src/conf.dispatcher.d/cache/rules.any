@@ -1,0 +1,58 @@
+# Cache Rules for AEM BMAD Showcase
+# See: https://experienceleague.adobe.com/docs/experience-manager-cloud-service/content/implementing/content-delivery/disp-overview.html
+
+/docroot "/mnt/var/www/html"
+/statfileslevel "2"
+
+# Cache rules
+/rules {
+    # Cache HTML pages
+    /0000 { /glob "*" /type "allow" }
+
+    # Don't cache login page
+    /0010 { /glob "/content/*/login*" /type "deny" }
+
+    # Don't cache user-specific content
+    /0020 { /glob "/content/*/user/*" /type "deny" }
+
+    # Don't cache search results
+    /0030 { /glob "*search*" /type "deny" }
+}
+
+# Invalidate rules
+/invalidate {
+    /0000 { /glob "*" /type "deny" }
+    /0001 { /glob "*.html" /type "allow" }
+    /0002 { /glob "*.json" /type "allow" }
+}
+
+# Allowed clients for cache flush
+/allowedClients {
+    /0000 { /glob "*" /type "deny" }
+    /0001 { /glob "127.0.0.1" /type "allow" }
+    /0002 { /glob "localhost" /type "allow" }
+}
+
+# Ignore URL parameters for caching
+/ignoreUrlParams {
+    /0001 { /glob "*" /type "deny" }
+    /0002 { /glob "utm_*" /type "allow" }
+    /0003 { /glob "fbclid" /type "allow" }
+    /0004 { /glob "gclid" /type "allow" }
+}
+
+# Cache response headers
+/headers {
+    "Cache-Control"
+    "Content-Disposition"
+    "Content-Type"
+    "Expires"
+    "Last-Modified"
+    "X-Content-Type-Options"
+}
+
+# Grace period for stale content
+/gracePeriod "2"
+
+# Enable serving stale content on error
+/serveStaleOnError "1"

@@ -1,0 +1,8 @@
+# Render Configuration - AEM Publish Instance
+# See: https://experienceleague.adobe.com/docs/experience-manager-cloud-service/content/implementing/content-delivery/disp-overview.html
+
+/rend01 {
+    /hostname "${AEM_HOST}"
+    /port "${AEM_PORT}"
+    /timeout "0"
+}

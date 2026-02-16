@@ -1,0 +1,104 @@
+/**
+ * Carousel Component Styles
+ * Specification: SPEC-CAROUSEL-001
+ */
+
+.cmp-carousel {
+  position: relative;
+  overflow: hidden;
+
+  &__slides {
+    display: flex;
+    transition: transform 0.3s ease;
+  }
+
+  &__slide {
+    flex: 0 0 100%;
+    min-width: 100%;
+  }
+
+  &__controls {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 $spacing-4;
+    pointer-events: none;
+  }
+
+  &__arrow {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background: $color-white;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &--prev::before {
+      content: '←';
+    }
+
+    &--next::before {
+      content: '→';
+    }
+  }
+
+  &__indicators {
+    display: flex;
+    justify-content: center;
+    gap: $spacing-2;
+    padding: $spacing-4 0;
+  }
+
+  &__indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: $color-gray-300;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background: $color-gray-400;
+    }
+
+    &--active {
+      background: $color-primary;
+    }
+  }
+
+  // Accessibility: Pause button
+  &__pause {
+    position: absolute;
+    bottom: $spacing-4;
+    right: $spacing-4;
+    padding: $spacing-2;
+    background: rgba(0, 0, 0, 0.5);
+    color: $color-white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.7);
+    }
+  }
+}

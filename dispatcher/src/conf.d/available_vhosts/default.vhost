@@ -1,0 +1,56 @@
+# Default Virtual Host Configuration for AEM BMAD Showcase
+# See: https://experienceleague.adobe.com/docs/experience-manager-cloud-service/content/implementing/content-delivery/disp-overview.html
+
+<VirtualHost *:80>
+    ServerName "publish"
+    ServerAlias "*"
+
+    # Document root
+    DocumentRoot "${DOCROOT}"
+
+    # Include rewrites
+    Include conf.d/rewrites/rewrite.rules
+
+    # Include custom variables
+    Include conf.d/variables/custom.vars
+
+    # Error documents
+    ErrorDocument 404 /content/aem-bmad-showcase/us/en/errors/404.html
+    ErrorDocument 500 /content/aem-bmad-showcase/us/en/errors/500.html
+
+    # Log configuration
+    <IfModule mod_log_config.c>
+        LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+        LogFormat "%h %l %u %t \"%r\" %>s %b" common
+        CustomLog "logs/access.log" combined
+        ErrorLog "logs/error.log"
+    </IfModule>
+
+    # Enable dispatcher
+    <Directory "${DOCROOT}">
+        <IfModule disp_apache2.c>
+            ModMimeUsePathInfo On
+            SetHandler dispatcher-handler
+        </IfModule>
+        Options FollowSymLinks
+        AllowOverride None
+        Require all granted
+    </Directory>
+
+    # Security headers
+    <IfModule mod_headers.c>
+        Header always set X-Content-Type-Options "nosniff"
+        Header always set X-Frame-Options "SAMEORIGIN"
+        Header always set X-XSS-Protection "1; mode=block"
+        Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    </IfModule>
+
+    # Cache control for static assets
+    <LocationMatch "^/etc\.clientlibs/.*\.(js|css)$">
+        Header set Cache-Control "max-age=31536000, immutable"
+    </LocationMatch>
+
+    <LocationMatch "^/content/dam/.*\.(jpg|jpeg|png|gif|svg|webp)$">
+        Header set Cache-Control "max-age=86400"
+    </LocationMatch>
+</VirtualHost>

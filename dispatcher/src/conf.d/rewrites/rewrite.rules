@@ -1,0 +1,27 @@
+# Rewrite Rules for AEM BMAD Showcase
+# See: https://experienceleague.adobe.com/docs/experience-manager-cloud-service/content/implementing/content-delivery/disp-overview.html
+
+RewriteEngine On
+
+# Force trailing slash for directories
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_URI} !/$
+RewriteRule ^(.*)$ $1/ [R=301,L]
+
+# Redirect root to default locale
+RewriteRule ^/?$ /content/aem-bmad-showcase/us/en.html [PT,L]
+
+# Remove .html extension (optional - SEO friendly URLs)
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteCond %{REQUEST_URI} !\.html$
+# RewriteRule ^/content/(.*)$ /content/$1.html [PT,L]
+
+# Short URL mapping (optional)
+# Map /us/en/* to /content/aem-bmad-showcase/us/en/*
+RewriteCond %{REQUEST_URI} ^/us/
+RewriteRule ^/us/(.*)$ /content/aem-bmad-showcase/us/$1 [PT,L]
+
+# Prevent direct access to /content paths (redirect to short URLs)
+# RewriteCond %{REQUEST_URI} ^/content/aem-bmad-showcase/(.*)$
+# RewriteRule ^/content/aem-bmad-showcase/(.*)$ /$1 [R=301,L]

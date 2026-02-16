@@ -1,0 +1,23 @@
+# Client Headers to pass through to AEM
+# See: https://experienceleague.adobe.com/docs/experience-manager-cloud-service/content/implementing/content-delivery/disp-overview.html
+
+"Accept"
+"Accept-Encoding"
+"Accept-Language"
+"Authorization"
+"Cache-Control"
+"Connection"
+"Content-Type"
+"Cookie"
+"Host"
+"If-Modified-Since"
+"If-None-Match"
+"Origin"
+"Pragma"
+"Range"
+"Referer"
+"User-Agent"
+"X-Forwarded-For"
+"X-Forwarded-Host"
+"X-Forwarded-Proto"
+"X-Requested-With"

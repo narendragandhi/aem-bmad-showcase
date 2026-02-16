@@ -1,0 +1,47 @@
+/**
+ * Color Design Tokens
+ * Based on: bmad/02-Model-Definition/design-system.md
+ */
+
+// Primary
+$color-primary: #0066cc;
+$color-primary-dark: #004d99;
+$color-primary-light: #3399ff;
+
+// Secondary
+$color-secondary: #6c757d;
+$color-secondary-dark: #495057;
+$color-secondary-light: #adb5bd;
+
+// Accent
+$color-accent: #28a745;
+$color-accent-dark: #1e7e34;
+
+// Neutrals
+$color-white: #ffffff;
+$color-black: #000000;
+$color-gray-100: #f8f9fa;
+$color-gray-200: #e9ecef;
+$color-gray-300: #dee2e6;
+$color-gray-400: #ced4da;
+$color-gray-500: #adb5bd;
+$color-gray-600: #6c757d;
+$color-gray-700: #495057;
+$color-gray-800: #343a40;
+$color-gray-900: #212529;
+
+// Semantic
+$color-success: #28a745;
+$color-warning: #ffc107;
+$color-error: #dc3545;
+$color-info: #17a2b8;
+
+// Text
+$color-text-primary: $color-gray-900;
+$color-text-secondary: $color-gray-600;
+$color-text-inverse: $color-white;
+
+// Background
+$color-bg-primary: $color-white;
+$color-bg-secondary: $color-gray-100;
+$color-bg-dark: $color-gray-900;

@@ -1,0 +1,25 @@
+/**
+ * AEM BMAD Showcase - Main Stylesheet
+ *
+ * This file imports all component styles and global utilities.
+ */
+
+// Design Tokens / Variables
+@import 'variables/colors';
+@import 'variables/typography';
+@import 'variables/spacing';
+@import 'variables/breakpoints';
+
+// Base / Reset
+@import 'base/reset';
+@import 'base/typography';
+
+// Components
+@import 'components/hero/hero';
+@import 'components/card/card';
+@import 'components/carousel/carousel';
+@import 'components/navigation/navigation';
+
+// Utilities
+@import 'utilities/accessibility';
+@import 'utilities/spacing';

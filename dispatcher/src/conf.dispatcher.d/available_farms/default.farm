@@ -1,0 +1,49 @@
+# Default Dispatcher Farm Configuration
+# See: https://experienceleague.adobe.com/docs/experience-manager-cloud-service/content/implementing/content-delivery/disp-overview.html
+
+/default {
+    # Client headers to pass through
+    /clientheaders {
+        $include "../clientheaders/clientheaders.any"
+    }
+
+    # Virtual hosts
+    /virtualhosts {
+        "*"
+    }
+
+    # Render farm (AEM publish instance)
+    /renders {
+        $include "../renders/default_renders.any"
+    }
+
+    # Filter rules
+    /filter {
+        $include "../filters/filters.any"
+    }
+
+    # Cache configuration
+    /cache {
+        $include "../cache/rules.any"
+    }
+
+    # Statistics categories
+    /statistics {
+        /categories {
+            /html { /glob "*.html" }
+            /json { /glob "*.json" }
+            /others { /glob "*" }
+        }
+    }
+
+    # Propagate HTTP response headers
+    /propagateSyndPost "0"
+
+    # Session management (disabled by default)
+    /sessionmanagement {
+        /directory "/tmp"
+        /encode "md5"
+        /header "HTTP:authorization"
+        /timeout "800"
+    }
+}
