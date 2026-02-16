@@ -10,6 +10,7 @@ Modern AEM implementations rarely exist in isolation. They must integrate with:
 - **Commerce Backends** (Adobe Commerce, Salesforce Commerce Cloud)
 - **Translation Services** (Smartling, Lionbridge, Google Translate)
 - **DAM Systems** (Adobe Assets, Bynder, Aprimo)
+- **AI/LLM Services** (OpenAI, Anthropic Claude, Google Gemini)
 - **Custom Enterprise APIs** (internal services, legacy systems)
 
 This phase provides comprehensive documentation for implementing these integrations following AEM best practices.
@@ -25,6 +26,10 @@ This phase provides comprehensive documentation for implementing these integrati
 - **[headless-graphql.md](headless-graphql.md)**: Guide to AEM's headless capabilities including Content Fragments, GraphQL API, and SPA integration patterns.
 
 - **[osgi-services.md](osgi-services.md)**: OSGi service patterns for creating reusable, configurable integration services in AEM.
+
+- **[ai-services.md](ai-services.md)**: Multi-provider LLM service integration (OpenAI, Claude, Gemini) with unified abstraction layer for AI-powered content features.
+
+- **[ai-translation.md](ai-translation.md)**: AI-powered automatic translation service using LLMs, with change tracking, Live Copy integration, and workflow support.
 
 ## Integration Architecture Overview
 
@@ -46,12 +51,12 @@ This phase provides comprehensive documentation for implementing these integrati
 │                          └────────┬────────┘                          │
 └───────────────────────────────────┼────────────────────────────────────┘
                                     │
-        ┌───────────────┬───────────┼───────────┬───────────────┐
-        ▼               ▼           ▼           ▼               ▼
-┌───────────────┐ ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌───────────┐
-│  Salesforce   │ │  Adobe    │ │Translation│ │  Commerce │ │  Custom   │
-│     CRM       │ │ Analytics │ │  Service  │ │  Backend  │ │   APIs    │
-└───────────────┘ └───────────┘ └───────────┘ └───────────┘ └───────────┘
+        ┌───────────────┬───────────┼───────────┬───────────┬───────────┐
+        ▼               ▼           ▼           ▼           ▼           ▼
+┌───────────────┐ ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌───────────┐
+│  Salesforce   │ │  Adobe    │ │Translation│ │  Commerce │ │  AI/LLM   │ │  Custom   │
+│     CRM       │ │ Analytics │ │  Service  │ │  Backend  │ │ Services  │ │   APIs    │
+└───────────────┘ └───────────┘ └───────────┘ └───────────┘ └───────────┘ └───────────┘
 ```
 
 ## BMAD Agent Responsibilities
