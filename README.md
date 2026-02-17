@@ -128,7 +128,7 @@ Quality assurance and production deployment:
 | Layer | Technology |
 |-------|------------|
 | CMS | Adobe Experience Manager as a Cloud Service |
-| Backend | Java 11+, OSGi, Sling Models |
+| Backend | Java 21+, OSGi, Sling Models |
 | Frontend | HTL, React (SPA Editor), SCSS |
 | CI/CD | Adobe Cloud Manager |
 | CDN | Adobe Managed CDN (Fastly) |
@@ -139,7 +139,7 @@ Quality assurance and production deployment:
 
 ### Prerequisites
 
-- Java 11 or higher
+- Java 21 or higher
 - Maven 3.6+
 - Node.js 18+ (for frontend build)
 - AEM as a Cloud Service SDK
