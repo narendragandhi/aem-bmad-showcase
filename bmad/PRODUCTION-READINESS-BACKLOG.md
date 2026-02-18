@@ -4,9 +4,16 @@
 
 This backlog contains prioritized tasks to bring the AEM BMAD Showcase from reference implementation to production-ready status. Tasks are organized into sprints with BEAD task IDs for tracking.
 
-**Estimated Effort:** 3 Sprints (6 weeks)
+**Estimated Effort:** 4 Sprints (8 weeks)
 **Current Test Coverage:** 31%
 **Target Test Coverage:** 80%
+
+### Third-Party Integrations Covered
+- LLM Services (Claude, OpenAI) - Testing, Resilience, Fallbacks
+- Email Service (SendGrid) - Testing, Resilience, Fallbacks
+- Adobe Analytics - Testing, Compliance
+- Adobe Target - Testing, Performance
+- External REST APIs - Contract Testing, Monitoring
 
 ---
 
@@ -715,6 +722,372 @@ acceptance_criteria:
 
 ---
 
+## Sprint 4: Third-Party Integration Hardening (Week 7-8)
+
+### PROD-017: Add Integration Contract Testing
+**Priority:** P2 - HIGH
+**Effort:** 2 days
+**Type:** Testing
+
+```yaml
+id: PROD-017
+status: pending
+assignee: TBD
+
+tasks:
+  - Add Pact or WireMock for contract testing
+  - Create contracts for LLM API (Claude, OpenAI)
+  - Create contracts for Email API (SendGrid)
+  - Create contracts for Analytics API
+  - Add contract verification to CI
+  - Document API versioning strategy
+
+contracts:
+  claude_api:
+    - POST /v1/messages
+    - Response schema validation
+    - Error response formats
+
+  openai_api:
+    - POST /v1/chat/completions
+    - Response schema validation
+    - Rate limit headers
+
+  sendgrid_api:
+    - POST /v3/mail/send
+    - Response codes
+    - Error formats
+
+  analytics_api:
+    - Data layer schema
+    - Event payload formats
+
+acceptance_criteria:
+  - [ ] Contracts defined for all external APIs
+  - [ ] Contract tests in CI pipeline
+  - [ ] Breaking changes detected early
+  - [ ] API versioning documented
+```
+
+---
+
+### PROD-018: Add Adobe Analytics Integration Testing
+**Priority:** P2 - MEDIUM
+**Effort:** 2 days
+**Type:** Testing
+
+```yaml
+id: PROD-018
+status: pending
+assignee: TBD
+
+tasks:
+  - Create Analytics test utilities
+  - Add data layer validation tests
+  - Add Launch rules testing
+  - Create event tracking tests
+  - Add pageview tracking tests
+  - Validate PII exclusion
+  - Add to E2E test suite
+
+test_scenarios:
+  data_layer:
+    - Page data populated correctly
+    - User data anonymized
+    - Product data formatted
+    - Search data captured
+
+  events:
+    - CTA click events fire
+    - Form submission events
+    - Video play events
+    - Error events
+
+  compliance:
+    - No PII in analytics
+    - Consent respected
+    - Cookie preferences honored
+
+acceptance_criteria:
+  - [ ] Data layer tests pass
+  - [ ] Event tracking verified
+  - [ ] PII compliance confirmed
+  - [ ] Tests in CI pipeline
+```
+
+---
+
+### PROD-019: Add Adobe Target Integration Testing
+**Priority:** P2 - MEDIUM
+**Effort:** 2 days
+**Type:** Testing
+
+```yaml
+id: PROD-019
+status: pending
+assignee: TBD
+
+tasks:
+  - Create Target test utilities
+  - Add A/B test variant testing
+  - Add personalization testing
+  - Test fallback behavior
+  - Test flicker prevention
+  - Add performance impact tests
+
+test_scenarios:
+  personalization:
+    - Correct variant served
+    - Fallback content works
+    - No flicker on load
+    - Performance within SLA
+
+  integration:
+    - Target calls succeed
+    - Timeout handling works
+    - Cache behavior correct
+    - Analytics integration works
+
+acceptance_criteria:
+  - [ ] Variant delivery tested
+  - [ ] Fallback behavior verified
+  - [ ] Performance acceptable
+  - [ ] No content flicker
+```
+
+---
+
+### PROD-020: Add Third-Party Service Monitoring
+**Priority:** P2 - HIGH
+**Effort:** 1 day
+**Type:** Observability
+
+```yaml
+id: PROD-020
+status: pending
+assignee: TBD
+depends_on: [PROD-012]
+
+tasks:
+  - Add service health metrics
+  - Create dependency dashboard
+  - Add SLA tracking
+  - Configure alerting thresholds
+  - Add latency tracking
+  - Create availability reports
+
+metrics:
+  per_service:
+    - availability_percentage
+    - response_time_p50
+    - response_time_p95
+    - response_time_p99
+    - error_rate
+    - request_count
+    - circuit_breaker_state
+
+  dashboards:
+    - Third-party service health
+    - API latency trends
+    - Error rate by service
+    - Cost tracking (API calls)
+
+  alerts:
+    - Service degradation (>1% error rate)
+    - High latency (>2s p95)
+    - Circuit breaker open
+    - Rate limit approaching
+
+acceptance_criteria:
+  - [ ] All services have metrics
+  - [ ] Dashboard available
+  - [ ] Alerts configured
+  - [ ] SLA tracking active
+```
+
+---
+
+### PROD-021: Add Integration Fallback Strategies
+**Priority:** P2 - HIGH
+**Effort:** 2 days
+**Type:** Reliability
+
+```yaml
+id: PROD-021
+status: pending
+assignee: TBD
+depends_on: [PROD-007]
+
+tasks:
+  - Implement graceful degradation for LLM
+  - Implement graceful degradation for Email
+  - Implement graceful degradation for Analytics
+  - Add cached response fallbacks
+  - Create static fallback content
+  - Test all fallback scenarios
+
+fallback_strategies:
+  llm_service:
+    primary: Claude API
+    fallback_1: OpenAI API
+    fallback_2: Cached responses
+    fallback_3: Static content / hide feature
+    timeout: 10s
+
+  email_service:
+    primary: SendGrid API
+    fallback_1: Queue for retry
+    fallback_2: Log for manual send
+    timeout: 5s
+
+  analytics:
+    primary: Adobe Analytics
+    fallback: Queue locally, sync later
+    timeout: 2s
+
+  personalization:
+    primary: Adobe Target
+    fallback: Default content
+    timeout: 500ms
+
+acceptance_criteria:
+  - [ ] All services have fallbacks
+  - [ ] Fallbacks tested
+  - [ ] User experience maintained
+  - [ ] Degradation logged/alerted
+```
+
+---
+
+### PROD-022: Add Rate Limiting for Outbound APIs
+**Priority:** P2 - MEDIUM
+**Effort:** 1 day
+**Type:** Reliability
+
+```yaml
+id: PROD-022
+status: pending
+assignee: TBD
+
+tasks:
+  - Implement rate limiter for LLM calls
+  - Implement rate limiter for Email calls
+  - Add request queuing
+  - Add backpressure handling
+  - Configure per-environment limits
+  - Add cost tracking
+
+rate_limits:
+  claude_api:
+    requests_per_minute: 60
+    tokens_per_minute: 100000
+    queue_size: 100
+    backpressure: reject_new
+
+  openai_api:
+    requests_per_minute: 60
+    tokens_per_minute: 90000
+    queue_size: 100
+    backpressure: reject_new
+
+  email_api:
+    emails_per_second: 10
+    emails_per_day: 10000
+    queue_size: 1000
+    backpressure: queue
+
+acceptance_criteria:
+  - [ ] Rate limits enforced
+  - [ ] Queuing works
+  - [ ] Backpressure handled
+  - [ ] Costs tracked
+```
+
+---
+
+### PROD-023: Create Mock Services for Development
+**Priority:** P3 - MEDIUM
+**Effort:** 1 day
+**Type:** Developer Experience
+
+```yaml
+id: PROD-023
+status: pending
+assignee: TBD
+
+tasks:
+  - Create WireMock configurations
+  - Add mock LLM service
+  - Add mock Email service
+  - Add mock Analytics endpoint
+  - Create docker-compose for local dev
+  - Document mock usage
+
+mock_services:
+  wiremock:
+    port: 8089
+    stubs:
+      - /v1/messages (Claude)
+      - /v1/chat/completions (OpenAI)
+      - /v3/mail/send (SendGrid)
+
+  docker_compose: |
+    services:
+      wiremock:
+        image: wiremock/wiremock:latest
+        ports:
+          - "8089:8080"
+        volumes:
+          - ./mocks:/home/wiremock
+
+acceptance_criteria:
+  - [ ] Mock services available
+  - [ ] Local dev works offline
+  - [ ] Mocks match real APIs
+  - [ ] Documentation complete
+```
+
+---
+
+### PROD-024: Add API Versioning Strategy
+**Priority:** P3 - LOW
+**Effort:** 4 hours
+**Type:** Documentation
+
+```yaml
+id: PROD-024
+status: pending
+assignee: TBD
+
+tasks:
+  - Document API versioning approach
+  - Create migration guides for API changes
+  - Add deprecation warnings
+  - Create version compatibility matrix
+  - Document rollback procedures
+
+versioning_strategy:
+  external_apis:
+    - Pin to specific versions
+    - Monitor deprecation notices
+    - Plan migration 3 months ahead
+    - Test against beta versions
+
+  internal_apis:
+    - Semantic versioning
+    - Backward compatible changes
+    - Deprecation warnings in logs
+    - 6-month deprecation window
+
+acceptance_criteria:
+  - [ ] Strategy documented
+  - [ ] Versions tracked
+  - [ ] Migration path clear
+  - [ ] Team trained
+```
+
+---
+
 ## Backlog Summary
 
 | Sprint | Tasks | Effort | Focus |
@@ -722,6 +1095,7 @@ acceptance_criteria:
 | Sprint 1 | PROD-001 to PROD-006 | ~8 days | Security & Foundation |
 | Sprint 2 | PROD-007 to PROD-011 | ~11 days | Testing & Resilience |
 | Sprint 3 | PROD-012 to PROD-016 | ~7 days | Production Hardening |
+| Sprint 4 | PROD-017 to PROD-024 | ~11 days | Third-Party Integration |
 
 ### Coverage Targets by Sprint End
 
