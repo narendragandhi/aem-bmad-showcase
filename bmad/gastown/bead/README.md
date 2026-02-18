@@ -309,3 +309,101 @@ phases:
 [Tester] Status: pending → in_progress
 ...
 ```
+
+## Shared Memory (context.json)
+
+Each agent directory contains a `context.json` file that provides persistent memory across sessions. This enables AI agents to maintain state, track progress, and coordinate with other agents.
+
+### Context Schema
+
+```json
+{
+  "agent": "coder",
+  "last_updated": "2026-02-18T00:00:00Z",
+  "session_count": 5,
+  "current_workflow": {
+    "workflow_id": "comp-001",
+    "workflow_name": "Hero Component Development",
+    "started_at": "2026-02-17T10:00:00Z",
+    "phase": "implementation"
+  },
+  "active_issues": [
+    {
+      "issue_id": "comp-001-impl-001",
+      "status": "in_progress",
+      "started_at": "2026-02-17T10:30:00Z",
+      "last_action": "Created Sling Model"
+    }
+  ],
+  "completed_issues": [...],
+  "dependencies": {
+    "waiting_on": [],
+    "blocking": [
+      {
+        "issue_id": "comp-001-test-001",
+        "waiting_agent": "tester"
+      }
+    ]
+  },
+  "handoffs": {
+    "inbox": [],
+    "outbox": []
+  },
+  "metrics": {...},
+  "preferences": {...},
+  "notes": [...]
+}
+```
+
+### Key Fields
+
+| Field | Purpose |
+|-------|---------|
+| `current_workflow` | Active workflow context for multi-session tasks |
+| `active_issues` | Issues currently being worked on |
+| `dependencies.waiting_on` | Issues blocking this agent |
+| `dependencies.blocking` | Other agents waiting on this agent |
+| `handoffs.inbox` | Messages from other agents |
+| `handoffs.outbox` | Messages sent (audit trail) |
+| `metrics` | Performance tracking |
+| `notes` | Persistent cross-session memory |
+
+### Dependency Resolution
+
+Dependencies are tracked bidirectionally:
+
+```
+┌─────────────┐    waiting_on    ┌─────────────┐
+│   Tester    │ ───────────────► │   Coder     │
+│ context.json│                  │ context.json│
+│             │ ◄─────────────── │             │
+└─────────────┘    blocking      └─────────────┘
+```
+
+**Resolution Flow:**
+1. Coder completes implementation
+2. Coder updates `blocking` to remove tester
+3. Coder sends handoff message to tester's inbox
+4. Tester's `waiting_on` is cleared
+5. Tester can begin work
+
+### Context Update Protocol
+
+1. **Session Start**: Read `context.json`, increment `session_count`
+2. **Issue Pickup**: Add to `active_issues`, update dependencies
+3. **Progress**: Update `last_action`, append to `notes` if significant
+4. **Completion**: Move to `completed_issues`, send handoff, update `blocking`
+5. **Session End**: Update `last_updated`, commit context.json
+
+### Query Patterns
+
+```bash
+# Check which agents are blocked
+jq 'select(.dependencies.waiting_on | length > 0) | .agent' bead/.issues/*/context.json
+
+# Find agents with pending handoffs
+jq 'select(.handoffs.inbox | length > 0) | .agent' bead/.issues/*/context.json
+
+# Get total completed issues across all agents
+jq -s '[.[].metrics.issues_completed] | add' bead/.issues/*/context.json
+```
