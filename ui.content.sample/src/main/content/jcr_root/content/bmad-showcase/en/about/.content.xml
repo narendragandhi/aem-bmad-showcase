@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        jcr:primaryType="cq:PageContent"
+        jcr:title="About BMAD"
+        jcr:description="Learn about the BMAD methodology and how it transforms AEM development"
+        sling:resourceType="bmad-showcase/components/page"
+        cq:template="/conf/bmad-showcase/settings/wcm/templates/content-page"
+        navTitle="About">
+        <root
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="bmad-showcase/components/container">
+            <hero
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="bmad-showcase/components/hero"
+                title="About BMAD Methodology"
+                description="Breakthrough Method for Agile Development - A comprehensive approach to AEM project delivery"
+                variant="compact"/>
+            <text
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="bmad-showcase/components/text"
+                text="&lt;h2&gt;What is BMAD?&lt;/h2&gt;&lt;p&gt;BMAD (Breakthrough Method for Agile Development) is a structured methodology designed specifically for AEM projects. It combines best practices from agile development with AEM-specific patterns to deliver high-quality digital experiences.&lt;/p&gt;&lt;h3&gt;Key Phases&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;Project Initialization&lt;/li&gt;&lt;li&gt;Business Discovery&lt;/li&gt;&lt;li&gt;Model Definition&lt;/li&gt;&lt;li&gt;Architecture Design&lt;/li&gt;&lt;li&gt;Development Sprint&lt;/li&gt;&lt;li&gt;Testing and Deployment&lt;/li&gt;&lt;li&gt;Operations&lt;/li&gt;&lt;/ul&gt;"/>
+            <cardgrid
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="bmad-showcase/components/cardgrid"
+                title="BMAD Benefits"
+                columns="2">
+                <card1
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="bmad-showcase/components/card"
+                    title="Faster Delivery"
+                    description="Structured approach reduces rework and accelerates time-to-market."/>
+                <card2
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="bmad-showcase/components/card"
+                    title="Higher Quality"
+                    description="Built-in quality gates and testing strategies ensure reliable outcomes."/>
+                <card3
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="bmad-showcase/components/card"
+                    title="Better Collaboration"
+                    description="Clear roles and documentation improve team alignment."/>
+                <card4
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="bmad-showcase/components/card"
+                    title="AI-Enhanced"
+                    description="GasTown agents and BEAD tracking bring AI assistance to development."/>
+            </cardgrid>
+        </root>
+    </jcr:content>
+</jcr:root>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Home"
+        jcr:description="Welcome to the AEM BMAD Showcase - demonstrating best practices in AEM development"
+        sling:resourceType="bmad-showcase/components/page"
+        cq:template="/conf/bmad-showcase/settings/wcm/templates/landing-page"
+        navTitle="Home">
+        <root
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="bmad-showcase/components/container">
+            <hero
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="bmad-showcase/components/hero"
+                title="Welcome to BMAD Showcase"
+                description="Experience the power of the BMAD methodology combined with modern AEM development practices. Build faster, smarter, and more reliably."
+                backgroundImage="/content/dam/bmad-showcase/images/hero-bg.jpg"
+                ctaText="Get Started"
+                ctaLink="/content/bmad-showcase/en/about.html"
+                variant="fullwidth"/>
+            <cardgrid
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="bmad-showcase/components/cardgrid"
+                title="Our Capabilities"
+                columns="3">
+                <card1
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="bmad-showcase/components/card"
+                    title="AI-Powered Content"
+                    description="Leverage LLM integration for intelligent content generation and translation."
+                    image="/content/dam/bmad-showcase/images/ai-icon.png"
+                    link="/content/bmad-showcase/en/features/ai.html"/>
+                <card2
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="bmad-showcase/components/card"
+                    title="Component Library"
+                    description="Production-ready components built with accessibility and performance in mind."
+                    image="/content/dam/bmad-showcase/images/components-icon.png"
+                    link="/content/bmad-showcase/en/features/components.html"/>
+                <card3
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="bmad-showcase/components/card"
+                    title="BMAD Methodology"
+                    description="Structured approach to AEM development with comprehensive documentation."
+                    image="/content/dam/bmad-showcase/images/methodology-icon.png"
+                    link="/content/bmad-showcase/en/features/methodology.html"/>
+            </cardgrid>
+            <carousel
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="bmad-showcase/components/carousel"
+                title="Featured Content"
+                autoplay="{Boolean}true"
+                interval="5000">
+                <slide1
+                    jcr:primaryType="nt:unstructured"
+                    title="Developer Guide"
+                    description="Complete guide for AEM developers"
+                    image="/content/dam/bmad-showcase/images/dev-guide.jpg"
+                    link="/content/bmad-showcase/en/docs/developer.html"/>
+                <slide2
+                    jcr:primaryType="nt:unstructured"
+                    title="Architecture Patterns"
+                    description="Best practices for AEM architecture"
+                    image="/content/dam/bmad-showcase/images/architecture.jpg"
+                    link="/content/bmad-showcase/en/docs/architecture.html"/>
+                <slide3
+                    jcr:primaryType="nt:unstructured"
+                    title="Testing Strategy"
+                    description="Comprehensive testing approach"
+                    image="/content/dam/bmad-showcase/images/testing.jpg"
+                    link="/content/bmad-showcase/en/docs/testing.html"/>
+            </carousel>
+        </root>
+    </jcr:content>
+</jcr:root>

@@ -8,15 +8,15 @@
     <!-- ====================================================================== -->
     <groupId>com.example.aem.bmad</groupId>
     <artifactId>aem-bmad-showcase</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
 
     <name>AEM BMAD Showcase - Reactor Project</name>
     <description>AEM BMAD Showcase - Reactor Project</description>
 
     <properties>
-        <aem.sdk.api.version>2023.10.14643.20231013T222839Z-230900</aem.sdk.api.version>
-        <core.wcm.components.version>2.23.0</core.wcm.components.version>
+        <aem.sdk.api.version>2026.2.24288.20260204T121510Z-260100</aem.sdk.api.version>
+        <core.wcm.components.version>2.25.0</core.wcm.components.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>21</maven.compiler.source>
@@ -27,6 +27,9 @@
         <module>core</module>
         <module>ui.apps</module>
         <module>ui.frontend</module>
+        <module>ui.content.sample</module>
+        <module>ui.tests</module>
+        <module>dispatcher</module>
     </modules>
 
     <build>
@@ -45,7 +48,7 @@
 
     <profiles>
         <profile>
-            <id>autoInstallPackage</id>
+            <id>autoInstallSinglePackage</id>
             <build>
                 <plugins>
                     <plugin>

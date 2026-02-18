@@ -8,7 +8,7 @@ Before you begin, ensure you have:
 
 | Requirement | Version | Verify Command |
 |-------------|---------|----------------|
-| Java JDK | 11 | `java -version` |
+| Java JDK | 21 | `java -version` |
 | Maven | 3.6+ | `mvn -version` |
 | Node.js | 18+ | `node -version` |
 | npm | 9+ | `npm -version` |
@@ -63,7 +63,6 @@ mvn clean install -PautoInstallSinglePackage
 |---------|-------------|
 | `mvn clean install -PautoInstallSinglePackage` | Deploy all to Author |
 | `mvn clean install -PautoInstallSinglePackagePublish` | Deploy to Publish (port 4503) |
-| `mvn clean install -PautoInstallPackage` | Deploy only ui.apps and ui.content |
 
 ### Step 4: Verify Installation
 
@@ -104,7 +103,7 @@ aem-bmad-showcase/
    ```bash
    # Quick redeploy (core + ui.apps only)
    mvn clean install -PautoInstallBundle -pl core
-   mvn clean install -PautoInstallPackage -pl ui.apps
+   mvn clean install -PautoInstallSinglePackage -pl ui.apps
    ```
 
 ### Running Tests
@@ -136,7 +135,7 @@ npm run dev
 npm run build
 
 # Deploy to AEM
-cd .. && mvn clean install -PautoInstallPackage -pl ui.frontend,ui.apps
+cd .. && mvn clean install -PautoInstallSinglePackage -pl ui.frontend,ui.apps
 ```
 
 ## Creating Your First Page
@@ -182,18 +181,18 @@ open http://localhost:4502/system/console/bundles
 
 ### Java Version Mismatch
 
-**Cause:** Wrong Java version (AEM requires Java 11)
+**Cause:** Wrong Java version (AEM requires Java 21)
 
 **Solution:**
 ```bash
 # Check current Java version
 java -version
 
-# On macOS with multiple JDKs, switch to Java 11
-export JAVA_HOME=$(/usr/libexec/java_home -v 11)
+# On macOS with multiple JDKs, switch to Java 21
+export JAVA_HOME=$(/usr/libexec/java_home -v 21)
 
 # Verify
-java -version  # Should show 11.x.x
+java -version  # Should show 21.x.x
 ```
 
 ### Frontend Build Fails
@@ -217,7 +216,7 @@ npm install
 
 1. **Import Project:** File → Open → Select `pom.xml`
 2. **Enable Maven Auto-Import:** When prompted
-3. **Set Project SDK:** File → Project Structure → SDK → Java 11
+3. **Set Project SDK:** File → Project Structure → SDK → Java 21
 4. **Install AEM Plugins:** (Optional)
    - AEM IDE Tooling (IntelliJ Marketplace)
 
@@ -233,7 +232,7 @@ npm install
    ```json
    {
      "java.configuration.updateBuildConfiguration": "automatic",
-     "java.jdt.ls.java.home": "/path/to/jdk-11"
+     "java.jdt.ls.java.home": "/path/to/jdk-21"
    }
    ```
 
