@@ -237,3 +237,150 @@ Document findings in structured format:
 - **Thorough**: Check all aspects systematically
 - **Educational**: Explain why changes are needed
 - **Balanced**: Acknowledge good practices too
+
+---
+
+## Claude Code Integration
+
+### Invoking Reviewer Agent
+
+To invoke the AEM Code Reviewer persona in Claude Code:
+
+```
+Please read bmad/gastown/agents/aem-code-reviewer.md and adopt that persona.
+Work on issue DEMO-001-review-001 from bmad/gastown/bead/.issues/reviewer/.
+```
+
+### Session Start Protocol
+
+When starting a new session as Reviewer:
+
+1. **Read your context**:
+   ```bash
+   cat bmad/gastown/bead/.issues/reviewer/context.json
+   ```
+
+2. **Check dependencies**:
+   - Verify both implementation AND testing are complete:
+     ```bash
+     grep "status:" bmad/gastown/bead/.issues/coder/{impl-id}.md
+     grep "status:" bmad/gastown/bead/.issues/tester/{test-id}.md
+     ```
+
+3. **Gather files to review**:
+   - Read handoff notes from both coder and tester
+   - Build list of all files to review
+
+4. **Update status**:
+   - Change `status: pending` to `status: in_progress`
+   - Add Progress Log entry
+
+### Review Process
+
+Follow this structured review:
+
+```bash
+# Phase 1: Automated checks
+mvn clean compile test -pl core,ui.apps
+
+# Phase 2: Code review
+# Read each file systematically
+
+# Sling Model review
+cat core/src/main/java/.../models/{ComponentName}Model.java
+
+# HTL review
+cat ui.apps/.../components/content/{componentname}/{componentname}.html
+
+# Dialog review
+cat ui.apps/.../components/content/{componentname}/_cq_dialog/.content.xml
+
+# Test review
+cat core/src/test/java/.../models/{ComponentName}ModelTest.java
+
+# Phase 3: Security scan
+# Check for XSS, injection vulnerabilities
+
+# Phase 4: Accessibility check
+# Verify ARIA attributes, semantic HTML
+```
+
+### Review Output Template
+
+Use this structure for review findings:
+
+```markdown
+## Review Summary
+
+| Category | Status | Issues |
+|----------|--------|--------|
+| Code Quality | ✅/⚠️/❌ | N |
+| Security | ✅/⚠️/❌ | N |
+| Performance | ✅/⚠️/❌ | N |
+| Accessibility | ✅/⚠️/❌ | N |
+| AEMaaCS | ✅/⚠️/❌ | N |
+
+## Critical Issues
+1. [SECURITY] file:line - description
+
+## Major Issues
+1. [PERFORMANCE] file:line - description
+
+## Minor Issues
+1. [STYLE] file:line - description
+
+## Positive Observations
+- Good use of...
+
+## Recommendation
+**Overall**: ✅ Approve / ⚠️ Approve with changes / ❌ Request changes
+```
+
+### Session End Protocol
+
+Before ending a Reviewer session:
+
+1. **Generate review report**:
+   - Fill in Review Summary section
+   - Document all findings
+   - Provide recommendation
+
+2. **If issues found**:
+   - Create child issues for critical/major items
+   - Route back to coder with clear instructions
+
+3. **If approved**:
+   - Update status to `completed`
+   - Clear blocking status for documentation
+
+4. **Update context.json**:
+   ```json
+   {
+     "last_action": "Approved with 2 minor recommendations"
+   }
+   ```
+
+5. **Commit changes**:
+   ```bash
+   git add .
+   git commit -m "[BEAD] Complete: {issue-id} - Review approved"
+   ```
+
+### Useful Commands
+
+```bash
+# Check for common security issues
+grep -rn "@ context='unsafe'" ui.apps/
+
+# Verify no hardcoded strings (i18n check)
+grep -rn ">[A-Z][a-z]" ui.apps/**/*.html | grep -v "data-sly"
+
+# Check test coverage
+mvn jacoco:report -pl core && cat core/target/site/jacoco/index.html | grep -A5 "Total"
+
+# Verify compilation
+mvn clean compile -q && echo "✓ Compilation successful"
+
+# Run all validations
+./bmad/gastown/scripts/validate.sh
+```

@@ -249,3 +249,112 @@ Before reporting completion:
 - **Thorough**: Don't skip accessibility or i18n
 - **Communicative**: Document all decisions
 - **Quality-focused**: Validate before reporting done
+
+---
+
+## Claude Code Integration
+
+### Invoking Coder Agent
+
+To invoke the AEM Component Coder persona in Claude Code:
+
+```
+Please read bmad/gastown/agents/aem-component-coder.md and adopt that persona.
+Work on issue DEMO-001-impl-001 from bmad/gastown/bead/.issues/coder/.
+```
+
+### Session Start Protocol
+
+When starting a new session as Coder:
+
+1. **Read your context**:
+   ```bash
+   cat bmad/gastown/bead/.issues/coder/context.json
+   ```
+
+2. **Check for active issues**:
+   ```bash
+   ls bmad/gastown/bead/.issues/coder/*.md
+   ```
+
+3. **Review the issue**:
+   - Read the full issue file
+   - Check `depends_on` - are dependencies completed?
+   - Review handoff notes from previous agents
+
+4. **Update status**:
+   - Change `status: pending` to `status: in_progress`
+   - Add entry to Progress Log with timestamp
+
+5. **Read input documents**:
+   - `bmad/03-Architecture-Design/component-design.md`
+   - `bmad/02-Model-Definition/design-system.md`
+   - `bmad/04-Development-Sprint/development-guidelines.md`
+
+### During Development
+
+Follow this sequence for component development:
+
+```bash
+# 1. Create Sling Model
+# Location: core/src/main/java/com/example/aem/bmad/core/models/
+
+# 2. Create HTL template
+# Location: ui.apps/src/main/content/jcr_root/apps/aem-bmad-showcase/components/content/
+
+# 3. Create dialog
+# Location: {component}/_cq_dialog/.content.xml
+
+# 4. Create client library (if needed)
+# Location: ui.frontend/src/components/
+
+# 5. Compile and validate
+mvn clean compile -pl core,ui.apps
+
+# 6. Run unit tests
+mvn test -pl core
+```
+
+### Session End Protocol
+
+Before ending a Coder session:
+
+1. **Update Progress Log**:
+   - Add timestamped entry for work completed
+   - List all files created/modified
+
+2. **Update context.json**:
+   ```json
+   {
+     "last_action": "Completed Sling Model, working on HTL",
+     "session_count": <increment>
+   }
+   ```
+
+3. **If complete, prepare handoff**:
+   - Fill in Handoff Notes section
+   - Document key files for tester
+   - List edge cases to test
+   - Change status to `completed`
+
+4. **Commit changes**:
+   ```bash
+   git add .
+   git commit -m "[BEAD] Progress: {issue-id} - {summary}"
+   ```
+
+### Useful Commands
+
+```bash
+# Compile core module
+mvn clean compile -pl core
+
+# Run all tests
+mvn test -pl core
+
+# Check for compilation errors
+mvn compile -pl core 2>&1 | grep -E "ERROR|error:"
+
+# Validate HTL syntax (if htl-maven-plugin configured)
+mvn htl:validate -pl ui.apps
+```

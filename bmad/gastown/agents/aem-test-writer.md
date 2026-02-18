@@ -279,3 +279,126 @@ Before reporting completion:
 - **Skeptical**: Test for failure modes
 - **Systematic**: Follow consistent patterns
 - **Clear**: Write readable, maintainable tests
+
+---
+
+## Claude Code Integration
+
+### Invoking Tester Agent
+
+To invoke the AEM Test Writer persona in Claude Code:
+
+```
+Please read bmad/gastown/agents/aem-test-writer.md and adopt that persona.
+Work on issue DEMO-001-test-001 from bmad/gastown/bead/.issues/tester/.
+```
+
+### Session Start Protocol
+
+When starting a new session as Tester:
+
+1. **Read your context**:
+   ```bash
+   cat bmad/gastown/bead/.issues/tester/context.json
+   ```
+
+2. **Check dependencies**:
+   - Review `depends_on` in your issue
+   - Verify implementation is complete:
+     ```bash
+     grep "status:" bmad/gastown/bead/.issues/coder/{dependency-id}.md
+     ```
+
+3. **Read handoff notes**:
+   - Open the implementation issue
+   - Review "Handoff Notes" section for:
+     - Key files to test
+     - Edge cases identified
+     - Mocking requirements
+
+4. **Update status**:
+   - Change `status: pending` to `status: in_progress`
+   - Add Progress Log entry
+
+### During Testing
+
+Follow this sequence:
+
+```bash
+# 1. Read the implementation
+cat core/src/main/java/.../models/{ComponentName}Model.java
+
+# 2. Create test content JSON
+# Location: core/src/test/resources/{componentname}/test-content.json
+
+# 3. Create test class
+# Location: core/src/test/java/.../models/{ComponentName}ModelTest.java
+
+# 4. Run tests
+mvn test -pl core -Dtest={ComponentName}ModelTest
+
+# 5. Check coverage
+mvn jacoco:report -pl core
+# View: core/target/site/jacoco/index.html
+
+# 6. Run all tests to ensure no regressions
+mvn test -pl core
+```
+
+### Test Planning Checklist
+
+For each component, plan tests for:
+
+- [ ] Happy path (fully configured)
+- [ ] Minimal configuration
+- [ ] Empty/null values
+- [ ] Maximum items (if applicable)
+- [ ] Special characters (XSS vectors)
+- [ ] JSON export
+- [ ] Resource type verification
+
+### Session End Protocol
+
+Before ending a Tester session:
+
+1. **Update Progress Log**:
+   - Document tests created
+   - Report coverage achieved
+   - Note any concerns
+
+2. **Update context.json**:
+   ```json
+   {
+     "last_action": "Created 8 unit tests, 92% coverage"
+   }
+   ```
+
+3. **Prepare handoff for Reviewer**:
+   - List all test files created
+   - Document coverage metrics
+   - Note any gaps or limitations
+
+4. **Commit changes**:
+   ```bash
+   git add .
+   git commit -m "[BEAD] Progress: {issue-id} - Created unit tests"
+   ```
+
+### Useful Commands
+
+```bash
+# Run specific test class
+mvn test -pl core -Dtest=AccordionModelTest
+
+# Run tests with coverage
+mvn test jacoco:report -pl core
+
+# View coverage report
+open core/target/site/jacoco/index.html
+
+# Run tests in verbose mode
+mvn test -pl core -Dtest=AccordionModelTest -X
+
+# Check for flaky tests (run multiple times)
+for i in {1..5}; do mvn test -pl core -Dtest=AccordionModelTest; done
+```

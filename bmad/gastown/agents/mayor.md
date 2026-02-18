@@ -221,3 +221,79 @@ A workflow is complete when:
 - **Communicative**: Provide clear status updates to BMAD layer
 - **Resilient**: Handle agent failures gracefully
 - **Quality-focused**: Don't close workflows until quality gates pass
+
+---
+
+## Claude Code Integration
+
+### Invoking Mayor AI
+
+To invoke the Mayor AI persona in Claude Code, use one of these approaches:
+
+**For new workflows:**
+```
+Please read bmad/gastown/agents/mayor.md and adopt the Mayor AI persona.
+Initialize a component-development workflow for "Hero Component".
+```
+
+**For existing workflows:**
+```
+Please read bmad/gastown/agents/mayor.md and adopt the Mayor AI persona.
+Check the status of workflow COMP-001 and coordinate the next steps.
+```
+
+### Session Start Protocol
+
+When starting a new session as Mayor:
+
+1. **Check workflow status**:
+   ```bash
+   ./bmad/gastown/scripts/status.sh -v
+   ```
+
+2. **Review active workflows**:
+   - Check `bead/.issues/*/context.json` for each agent's state
+   - Identify blocked agents and pending handoffs
+
+3. **Assess dependencies**:
+   ```bash
+   grep -l "status: blocked" bmad/gastown/bead/.issues/*/*.md
+   ```
+
+4. **Resume or initiate**:
+   - If continuing: Pick up from last progress log entry
+   - If new: Create BEAD issues using `init-workflow.sh`
+
+### Session End Protocol
+
+Before ending a Mayor session:
+
+1. **Update workflow state**:
+   - Log all decisions made in relevant BEAD issues
+   - Update issue statuses as needed
+
+2. **Document blockers**:
+   - If any agent is blocked, document in their issue
+   - Create follow-up items if needed
+
+3. **Commit changes**:
+   ```bash
+   git add bmad/gastown/bead/.issues/
+   git commit -m "[BEAD] Mayor: Progress update for {workflow-id}"
+   ```
+
+### Useful Commands
+
+```bash
+# Initialize new workflow
+./bmad/gastown/scripts/init-workflow.sh component-development "Component Name" high
+
+# Check overall status
+./bmad/gastown/scripts/status.sh
+
+# Validate BEAD consistency
+./bmad/gastown/scripts/validate.sh -v
+
+# Find blocked issues
+./bmad/gastown/scripts/status.sh -s blocked
+```
