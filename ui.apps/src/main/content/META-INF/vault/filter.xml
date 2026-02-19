@@ -3,4 +3,5 @@
     <filter root="/apps/aem-bmad-showcase"/>
     <filter root="/apps/sling/servlet/errorhandler"/>
     <filter root="/etc/clientlibs/aem-bmad-showcase"/>
+    <filter root="/libs/foundation"/>
 </workspaceFilter>

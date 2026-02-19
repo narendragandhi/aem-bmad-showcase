@@ -20,6 +20,11 @@ BMAD organizes development work around specialized AI agents, each responsible f
 ```
 aem-bmad-showcase/
 ├── README.md                          # This file
+├── all/                               # Combined content package (container)
+├── core/                              # OSGi bundle (Java code)
+├── ui.apps/                           # UI apps package (HTL, components)
+├── ui.frontend/                       # Frontend build (Webpack, React)
+├── ui.content.sample/                 # Sample content package
 ├── bmad/                              # BMAD process documentation
 │   ├── 00-Project-Initialization/     # Project setup and environment
 │   ├── 01-Business-Discovery/         # Requirements and user stories
@@ -32,7 +37,7 @@ aem-bmad-showcase/
 │   ├── tooling/                       # Getting started guides for tools
 │   ├── tutorials/                     # Step-by-step migration tutorials
 │   └── traceability-matrix.md         # Requirements to implementation mapping
-└── src/                               # AEM project source code (generated)
+└── dispatcher/                        # AEM Dispatcher configuration
 ```
 
 ## The BMAD Phases for AEM
@@ -128,21 +133,20 @@ Quality assurance and production deployment:
 | Layer | Technology |
 |-------|------------|
 | CMS | Adobe Experience Manager as a Cloud Service |
-| Backend | Java 21+, OSGi, Sling Models |
-| Frontend | HTL, React (SPA Editor), SCSS |
+| Backend | Java 11+, OSGi, Sling Models |
+| Frontend | HTL, React (SPA Editor), Webpack |
 | CI/CD | Adobe Cloud Manager |
-| CDN | Adobe Managed CDN (Fastly) |
-| Analytics | Adobe Analytics |
-| Personalization | Adobe Target |
+| Build | Maven 3.9+, AEM Project Archetype 56 |
+| SDK | AEM SDK 2026.2.x |
 
 ## Getting Started
 
 ### Prerequisites
 
-- Java 21 or higher
-- Maven 3.6+
+- Java 21 (recommended) or Java 11+
+- Maven 3.9+
 - Node.js 18+ (for frontend build)
-- AEM as a Cloud Service SDK
+- AEM as a Cloud Service SDK 2026.2+
 - Adobe Cloud Manager access
 
 ### Local Development Setup
@@ -152,11 +156,11 @@ Quality assurance and production deployment:
    mvn -B archetype:generate \
      -D archetypeGroupId=com.adobe.aem \
      -D archetypeArtifactId=aem-project-archetype \
-     -D archetypeVersion=35 \
+     -D archetypeVersion=56 \
      -D aemVersion=cloud \
      -D appTitle="AEM BMAD Showcase" \
      -D appId="aem-bmad-showcase" \
-     -D groupId="com.example"
+     -D groupId="com.example.aem.bmad"
    ```
 
 2. **Start the AEM SDK** Author instance:

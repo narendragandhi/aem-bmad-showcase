@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>AEM BMAD Showcase - All</comment>
+<entry key="allowIndexDefinitions">false</entry>
+<entry key="acHandling">merge</entry>
+<entry key="created">2026-02-19T03:18:24.824Z</entry>
+<entry key="groupId">com.example.aem.bmad</entry>
+<entry key="name">aem-bmad-showcase.all</entry>
+<entry key="description">All content package for AEM BMAD Showcase</entry>
+<entry key="artifactId">aem-bmad-showcase.all</entry>
+<entry key="version">1.0.0-SNAPSHOT</entry>
+<entry key="packageType">container</entry>
+<entry key="requiresRoot">false</entry>
+<entry key="group">com.example.aem.bmad</entry>
+</properties>
