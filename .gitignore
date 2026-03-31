@@ -1,0 +1,23 @@
+# Build outputs
+target/
+dist/
+
+# Node
+node_modules/
+node/
+package-lock.json
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
